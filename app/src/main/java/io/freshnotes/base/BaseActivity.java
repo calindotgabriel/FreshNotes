@@ -55,7 +55,7 @@ public class BaseActivity extends AppCompatActivity implements FragmentManager.O
                 popBackStack();
                 break;
         }
-        return true;
+        return false;
     }
 
     /**
