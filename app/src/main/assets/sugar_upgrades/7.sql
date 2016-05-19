@@ -1,1 +1,0 @@
-alter table NOTE add COLOR_HEX INTEGER;
