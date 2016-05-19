@@ -27,6 +27,7 @@ import io.freshnotes.domain.async.LoadNotesTask;
 import io.freshnotes.domain.event.OnNotePressedEvent;
 import io.freshnotes.domain.event.OnNotesLoadedEvent;
 import io.freshnotes.domain.model.Note;
+import io.freshnotes.domain.persistence.DbContext;
 import io.freshnotes.fragment.adapter.NoteAdapter;
 import io.freshnotes.utils.KeyboardUtils;
 
@@ -51,7 +52,8 @@ public class ListFragment extends StickyBusFragment implements SearchView.OnQuer
     public void onResume() {
         super.onResume();
         setHasOptionsMenu(true);
-        new LoadNotesTask().execute();
+        mNotes = DbContext.Notes.listAll();
+        initList(mNotes);
     }
 
     @Nullable
@@ -78,6 +80,7 @@ public class ListFragment extends StickyBusFragment implements SearchView.OnQuer
         MainActivity mainActivity = (MainActivity) getActivity();
         mainActivity.getSupportActionBar().setDisplayShowTitleEnabled(true);
         KeyboardUtils.hideKeyboard(getActivity());
+
     }
 
     private void initList(List<Note> notes) {
@@ -93,9 +96,9 @@ public class ListFragment extends StickyBusFragment implements SearchView.OnQuer
     /**
      * Called when the notes finished querying from the DB.
      */
-    public void onEvent(OnNotesLoadedEvent event) {
+   /* public void onEvent(OnNotesLoadedEvent event) {
         initList(event.notes);
-    }
+    }*/
 
     /**
      * Called when a note was clicked in the adapter.

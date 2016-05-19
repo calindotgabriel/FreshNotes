@@ -90,9 +90,9 @@ public class DetailFragment extends BaseFragment {
             Note note = new Note(title, content);
             DbContext.Notes.save(note);
         } else {
-            focusedNote.setTitle(title);
-            focusedNote.setContent(content);
-            DbContext.Notes.save(focusedNote);
+//            DbContext.Notes.update(focusedNote.getId(), title, content);
+            new DbContext.Notes.Update(focusedNote.getId()).title(title).content(content).commit();
+
         }
 
     }

@@ -1,14 +1,18 @@
 package io.freshnotes.domain.model;
 
-import com.orm.SugarRecord;
 
 import java.io.Serializable;
+
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Model class used for notes.
  */
-public class Note extends SugarRecord implements Serializable {
-
+public class Note extends RealmObject implements Serializable {
+    public static final String ID = "id";
+    @PrimaryKey
+    private Long id;
     private String title;
     private String content;
     private int colorHex;
@@ -20,6 +24,16 @@ public class Note extends SugarRecord implements Serializable {
         this.title = title;
         this.content = content;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
 
     public String getTitle() {
         return title;
