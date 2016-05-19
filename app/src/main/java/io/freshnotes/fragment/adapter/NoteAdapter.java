@@ -2,6 +2,7 @@ package io.freshnotes.fragment.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +46,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.mContent.setText(mNotes.get(position).getContent());
         holder.mTitle.setText(mNotes.get(position).getTitle());
+        final int colorHex = mNotes.get(position).getColorHex();
+        if (colorHex != 0) {
+            holder.mCard.setBackgroundColor(colorHex);
+        }
     }
 
     @Override
@@ -114,6 +119,8 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         TextView mContent;
         @Bind(R.id.note_title_tv)
         TextView mTitle;
+        @Bind(R.id.note_cv)
+        CardView mCard;
 
         public ViewHolder(View itemView) {
             super(itemView);

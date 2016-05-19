@@ -20,9 +20,9 @@
 
         <!--SugarORM config-->
         <meta-data android:name="DATABASE" android:value="fresh_notes.db" />
-        <meta-data android:name="VERSION" android:value="3" />
+        <meta-data android:name="VERSION" android:value="9" />
         <meta-data android:name="QUERY_LOG" android:value="true" />
-        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="io.freshnotes" />
+        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="io.freshnotes.domain.model" />
 
     </application>
 

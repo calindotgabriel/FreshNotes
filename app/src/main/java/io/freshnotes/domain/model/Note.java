@@ -11,6 +11,7 @@ public class Note extends SugarRecord implements Serializable {
 
     private String title;
     private String content;
+    private int colorHex;
 
     public Note() {
     } //required.
@@ -26,6 +27,14 @@ public class Note extends SugarRecord implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public int getColorHex() {
+        return colorHex;
+    }
+
+    public void setColorHex(int colorHex) {
+        this.colorHex = colorHex;
     }
 
     public Note(String content) {

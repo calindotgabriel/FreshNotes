@@ -3,6 +3,7 @@ package io.freshnotes.fragment;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,6 +30,8 @@ import io.freshnotes.utils.Constants;
 import io.freshnotes.utils.KeyboardUtils;
 
 public class DetailFragment extends BaseFragment {
+
+    private static final String TAG = "DetailFragment";
 
     MainActivity mMainActivity;
 
@@ -140,21 +143,12 @@ public class DetailFragment extends BaseFragment {
                 .setTitle("Choose color")
                 .wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
                 .density(12)
-                .setOnColorSelectedListener(new OnColorSelectedListener() {
-                    @Override
-                    public void onColorSelected(int selectedColor) {
-//                        toast("onColorSelected: 0x" + Integer.toHexString(selectedColor));
-                    }
-                })
                 .setPositiveButton("ok", new ColorPickerClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int selectedColor, Integer[] allColors) {
-//                        changeBackgroundColor(selectedColor);
-                    }
-                })
-                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                        /*final String hexColor = Integer.toHexString(selectedColor);
+                        Log.d(TAG, "Color: " + hexColor);*/
+                        mDetailNoteManager.get().setColorHex(selectedColor);
                     }
                 })
                 .build()
