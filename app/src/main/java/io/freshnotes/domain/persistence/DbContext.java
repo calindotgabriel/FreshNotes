@@ -63,13 +63,13 @@ public class DbContext {
         }
 
         public static class Update {
-
-
             private final Realm realm;
 
             private final Long id;
             private String title;
             private String content;
+
+            private int colorHex;
 
             public Update(Long id) {
                 this.realm = Realm.getDefaultInstance();
@@ -87,10 +87,17 @@ public class DbContext {
                 return this;
             }
 
+
+            public Update colorHex(int selectedColor) {
+                this.colorHex = selectedColor;
+                return this;
+            }
+
             public void commit() {
                 final Note note = realm.where(Note.class).equalTo(Note.ID, id).findFirst();
                 note.setTitle(title);
                 note.setContent(content);
+                note.setColorHex(colorHex);
                 realm.commitTransaction();
             }
         }

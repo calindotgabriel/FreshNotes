@@ -148,7 +148,8 @@ public class DetailFragment extends BaseFragment {
                     public void onClick(DialogInterface dialog, int selectedColor, Integer[] allColors) {
                         /*final String hexColor = Integer.toHexString(selectedColor);
                         Log.d(TAG, "Color: " + hexColor);*/
-                        mDetailNoteManager.get().setColorHex(selectedColor);
+                        final Note note = mDetailNoteManager.get();
+                        new DbContext.Notes.Update(note.getId()).colorHex(selectedColor).commit();
                     }
                 })
                 .build()
