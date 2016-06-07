@@ -46,8 +46,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.mContent.setText(mNotes.get(position).getContent());
         holder.mTitle.setText(mNotes.get(position).getTitle());
-        final int colorHex = mNotes.get(position).getColorHex();
-
     }
 
     @Override

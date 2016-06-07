@@ -3,12 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.fragment.DetailFragment">
+
+    >
 
     <LinearLayout
+        android:id="@+id/detail_header_ll"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="120dp"
         android:background="?colorPrimary"
         >
 
@@ -24,6 +25,7 @@
             android:textColorHint="@color/icons"
             android:textColor="@color/icons"
             android:textSize="36sp"
+            tools:text="For John"
             />
     </LinearLayout>
 
@@ -43,6 +45,7 @@
             android:textColor="@color/secondary_text"
             android:lines="4"
             android:background="@null"
+            tools:text="Do the laundry \nCall Maggie\nDoctor's Appointment "
             />
     </LinearLayout>
 

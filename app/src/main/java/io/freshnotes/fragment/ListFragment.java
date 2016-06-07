@@ -54,6 +54,7 @@ public class ListFragment extends StickyBusFragment implements SearchView.OnQuer
         setHasOptionsMenu(true);
         mNotes = DbContext.Notes.listAll();
         initList(mNotes);
+
     }
 
     @Nullable
@@ -79,7 +80,7 @@ public class ListFragment extends StickyBusFragment implements SearchView.OnQuer
         super.onViewCreated(view, savedInstanceState);
         MainActivity mainActivity = (MainActivity) getActivity();
         mainActivity.getSupportActionBar().setDisplayShowTitleEnabled(true);
-        KeyboardUtils.hideKeyboard(getActivity());
+
 
     }
 

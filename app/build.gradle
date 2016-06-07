@@ -35,4 +35,5 @@ dependencies {
     }
 
     compile 'com.github.QuadFlask:colorpicker:0.0.10'
+    compile 'com.google.android.gms:play-services-ads:8.4.0'
 }

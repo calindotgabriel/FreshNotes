@@ -3,7 +3,6 @@ package io.freshnotes.fragment;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,9 +10,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.flask.colorpicker.ColorPickerView;
-import com.flask.colorpicker.OnColorSelectedListener;
 import com.flask.colorpicker.builder.ColorPickerClickListener;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 
@@ -41,12 +40,23 @@ public class DetailFragment extends BaseFragment {
     @Bind(R.id.title_fd)
     EditText mTitleEt;
 
+    @Bind(R.id.detail_header_ll)
+    LinearLayout mHeaderLl;
+
     DetailNoteManager mDetailNoteManager;
 
 
-    public DetailFragment() { }
+    public DetailFragment() {
+    }
 
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_detail, container, false);
+        ButterKnife.bind(this, view);
+        return view;
+    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -60,7 +70,15 @@ public class DetailFragment extends BaseFragment {
         final Bundle args = getArguments();
         if (args != null) {
             Note note = (Note) args.getSerializable(Constants.KEY_NOTE);
-            this.setTargetedNote(note);
+            mDetailNoteManager.set(note);
+        }
+        initUI(mDetailNoteManager.get());
+    }
+
+    private void initUI(Note note) {
+        if (note != null) {
+            mTitleEt.setText(note.getTitle());
+            mContentEt.setText(note.getContent());
         }
     }
 
@@ -75,50 +93,10 @@ public class DetailFragment extends BaseFragment {
         mMainActivity.setOnBackStackPoppedListener(new BaseActivity.OnBackStackPoppedListener() {
             @Override
             public void onPopped() {
+                KeyboardUtils.hideKeyboard(getActivity());
                 saveNoteIfNecessary();
             }
         });
-    }
-
-    private void saveNoteIfNecessary() {
-        final String title = mTitleEt.getText().toString();
-        final String content = mContentEt.getText().toString();
-
-        final Note focusedNote = mDetailNoteManager.get();
-        final boolean newNote = focusedNote == null;
-        if (newNote) {
-            Note note = new Note(title, content);
-            DbContext.Notes.save(note);
-        } else {
-//            DbContext.Notes.update(focusedNote.getId(), title, content);
-            new DbContext.Notes.Update(focusedNote.getId()).title(title).content(content).commit();
-
-        }
-
-    }
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_detail, container, false);
-        ButterKnife.bind(this, view);
-        return view;
-    }
-
-    /**
-     * Creates a new instance of this fragment with a note coming from the list.
-     * @param note note coming from the #ListFragment
-     * @return instance of this fragment
-     */
-    public static Fragment newInstance(Note note) {
-        final DetailFragment fragment = new DetailFragment();
-        if (note != null) {
-            Bundle args = new Bundle();
-            args.putSerializable(Constants.KEY_NOTE, note);
-            fragment.setArguments(args);
-        }
-        return fragment;
     }
 
     @Override
@@ -137,6 +115,39 @@ public class DetailFragment extends BaseFragment {
         }
     }
 
+    private void saveNoteIfNecessary() {
+        final String title = mTitleEt.getText().toString();
+        final String content = mContentEt.getText().toString();
+
+        final Note focusedNote = mDetailNoteManager.get();
+        final boolean newNote = focusedNote == null;
+        if (newNote) {
+            Note note = new Note(title, content);
+            DbContext.Notes.save(note);
+        } else {
+            new DbContext.Notes.Update(focusedNote.getId()).title(title).content(content).commit();
+        }
+
+    }
+
+
+    /**
+     * Creates a new instance of this fragment with a note coming from the list.
+     *
+     * @param note note coming from the #ListFragment
+     * @return instance of this fragment
+     */
+    public static Fragment newInstance(Note note) {
+        final DetailFragment fragment = new DetailFragment();
+        if (note != null) {
+            Bundle args = new Bundle();
+            args.putSerializable(Constants.KEY_NOTE, note);
+            fragment.setArguments(args);
+        }
+        return fragment;
+    }
+
+
     private void chooseColor() {
         ColorPickerDialogBuilder
                 .with(getActivity())
@@ -150,24 +161,11 @@ public class DetailFragment extends BaseFragment {
                         Log.d(TAG, "Color: " + hexColor);*/
                         final Note note = mDetailNoteManager.get();
                         new DbContext.Notes.Update(note.getId()).colorHex(selectedColor).commit();
+                        mHeaderLl.setBackgroundColor(note.getColorHex());
                     }
                 })
                 .build()
                 .show();
-    }
-
-    /**
-     * Sets the fragment's focus to a note.
-     * @param note note to focus to
-     */
-    public void setTargetedNote(Note note) {
-        mDetailNoteManager.set(note);
-        fillFields(note);
-    }
-
-    private void fillFields(Note targetedNote) {
-        mTitleEt.setText(targetedNote.getTitle());
-        mContentEt.setText(targetedNote.getContent());
     }
 
 

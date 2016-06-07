@@ -98,6 +98,7 @@ public class DbContext {
                 note.setTitle(title);
                 note.setContent(content);
                 note.setColorHex(colorHex);
+                realm.copyToRealmOrUpdate(note);
                 realm.commitTransaction();
             }
         }

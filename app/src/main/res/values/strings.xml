@@ -9,4 +9,8 @@
     <string name="content">Note</string>
     <string name="share_note">Share CleanNote</string>
     <string name="action_search">Search</string>
+
+    <!-- AdMob ad unit IDs -->
+    <string name="banner_id">ca-app-pub-9125151538467382/2741316953</string>
+
 </resources>
